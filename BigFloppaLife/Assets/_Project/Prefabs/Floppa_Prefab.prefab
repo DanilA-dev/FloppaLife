@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9134486656748277163}
   - component: {fileID: 1125251596722949418}
+  - component: {fileID: 7338075649838429671}
+  - component: {fileID: 6126468067542210242}
   - component: {fileID: 6214455808564845144}
   m_Layer: 0
   m_Name: Floppa_Prefab
@@ -57,6 +59,89 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!195 &7338075649838429671
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830002514217927149}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.3
+  m_Speed: 1
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 500
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &6126468067542210242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830002514217927149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5988cd7c228d43dab179d4afe00609c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentState: 0
+  _debugStateChange: 0
+  _startState: 0
+  _stateEvents: []
+  OnAnyStateEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAnyStateExit:
+    m_PersistentCalls:
+      m_Calls: []
+  _viewHandler: {fileID: 2919631004769561364}
+  _idleState:
+    _timeoutExit: 2
+    _stateAnimationConfig:
+      _layer: 0
+      _isStatic: 0
+      _applyRootMotion: 0
+      _targetWeight: 1
+      _isRandomizeClip: 0
+      _animationClip: {fileID: 7400000, guid: 75d2c379e8df0b6488703f5738a7a730, type: 2}
+      _animationClips: []
+      _isLooping: 1
+      _avatarMask: {fileID: 0}
+      _isAdditive: 0
+      _useFootIK: 0
+      _useAutoFadeTimeBasedOnClipLength: 0
+      _crossFadeTime: 0
+      _fadeDelay: 0
+      _animationSpeed: 1
+  _roamState:
+    _timeoutExit: 5
+    _stateAnimationConfig:
+      _layer: 0
+      _isStatic: 0
+      _applyRootMotion: 0
+      _targetWeight: 1
+      _isRandomizeClip: 0
+      _animationClip: {fileID: 7400000, guid: 3f5cfd860fe4a7e4aa04209b1960e91f, type: 2}
+      _animationClips: []
+      _isLooping: 1
+      _avatarMask: {fileID: 0}
+      _isAdditive: 0
+      _useFootIK: 0
+      _useAutoFadeTimeBasedOnClipLength: 0
+      _crossFadeTime: 0
+      _fadeDelay: 0
+      _animationSpeed: 1
+    _navMeshAgent: {fileID: 7338075649838429671}
+    _roamRadius: 5
 --- !u!114 &6214455808564845144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,6 +167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8630475953801430173}
+  - component: {fileID: 2919631004769561364}
   m_Layer: 0
   m_Name: View
   m_TagString: Untagged
@@ -105,6 +191,19 @@ Transform:
   - {fileID: 8226649906544979781}
   m_Father: {fileID: 9134486656748277163}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2919631004769561364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4590176155686529957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9effbe4b19a346b1ba1c2f492408e133, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animationPlayable: {fileID: 4120333743840679274}
 --- !u!1001 &8475871245628360878
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -241,7 +340,7 @@ MonoBehaviour:
   _graphObject: {fileID: 0}
   _tryFoundOnParent: 0
   _connectToSeperateMixer: 0
-  _hasStartAnimations: 1
+  _hasStartAnimations: 0
   _onStartAnimations:
   - _layer: 0
     _isStatic: 0
