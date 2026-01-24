@@ -125,7 +125,7 @@ MonoBehaviour:
   _roamState:
     _timeoutExit: 5
     _stateAnimationConfig:
-      _layer: 0
+      _layer: 1
       _isStatic: 0
       _applyRootMotion: 0
       _targetWeight: 1

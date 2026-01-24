@@ -45,7 +45,7 @@ namespace _Project.Scripts.Core
             
             foreach (var state in states)
                 state.Init(this);
-
+            
             InitTransitions();
         }
         #endregion
