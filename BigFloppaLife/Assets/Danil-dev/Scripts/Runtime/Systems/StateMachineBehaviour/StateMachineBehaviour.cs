@@ -12,15 +12,19 @@ namespace D_Dev.StateMachineBehaviour
     {
         #region Fields
 
+        [FoldoutGroup("Base Settings", order:100)]
         [SerializeField, ReadOnly] protected TStateEnum _currentState;
+        [FoldoutGroup("Base Settings", order:100)]
         [SerializeField] protected bool _debugStateChange;
         [Space]
+        [FoldoutGroup("Base Settings", order:100)]
         [SerializeField] protected TStateEnum _startState;
-        [FoldoutGroup("Events")]
+        [Title("Events")]
+        [FoldoutGroup("Base Settings", order:100)]
         [SerializeField] protected StateEvent<TStateEnum>[] _stateEvents;
-        [FoldoutGroup("Events")]
+        [FoldoutGroup("Base Settings", order:100)]
         public UnityEvent<TStateEnum> OnAnyStateEnter;
-        [FoldoutGroup("Events")]
+        [FoldoutGroup("Base Settings", order:100)]
         public UnityEvent<TStateEnum> OnAnyStateExit;
         
         protected StateMachine<TStateEnum> _stateMachine;

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82e74d80d33248ad9b3c00ab2a51d7a7, type: 3}
+  m_Name: Player_Camera_EntityInfo
+  m_EditorClassIdentifier: 
+  _id: 858683df-941b-4129-86d4-6ad871cfc138
+  _entityPrefab:
+    _makeAddressable: 0
+    _asset: {fileID: 3317069460441653679, guid: 9448c1e7186e01d4e9757e7c995afdf3, type: 3}
+    _assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  _variables: []
+  references:
+    version: 2
+    RefIds: []

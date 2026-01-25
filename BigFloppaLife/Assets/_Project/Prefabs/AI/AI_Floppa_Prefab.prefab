@@ -1,0 +1,331 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1830002514217927149
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9134486656748277163}
+  - component: {fileID: 1125251596722949418}
+  - component: {fileID: 7338075649838429671}
+  - component: {fileID: 6126468067542210242}
+  m_Layer: 0
+  m_Name: AI_Floppa_Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9134486656748277163
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830002514217927149}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8630475953801430173}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1125251596722949418
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830002514217927149}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.29
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!195 &7338075649838429671
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830002514217927149}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.3
+  m_Speed: 1
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 500
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &6126468067542210242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830002514217927149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5988cd7c228d43dab179d4afe00609c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentState: 0
+  _debugStateChange: 0
+  _startState: 0
+  _stateEvents: []
+  OnAnyStateEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2919631004769561364}
+        m_TargetAssemblyTypeName: _Project.Scripts.Core.PetView.PetViewHandler, Project.Scripts
+        m_MethodName: PlayAnimationConfig
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnAnyStateExit:
+    m_PersistentCalls:
+      m_Calls: []
+  _viewHandler: {fileID: 2919631004769561364}
+  _navMeshAgent: {fileID: 7338075649838429671}
+  _idleState:
+    _timeoutExit:
+      rid: 3180810737205641431
+  _roamState:
+    _timeoutExit:
+      rid: 3180810737205641435
+    _moveSpeed:
+      rid: 3180810737205641433
+    _roamRadius:
+      rid: 3180810737205641434
+  references:
+    version: 2
+    RefIds:
+    - rid: 3180810737205641431
+      type: {class: FloatConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _value: 2
+    - rid: 3180810737205641433
+      type: {class: FloatConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _value: 0.5
+    - rid: 3180810737205641434
+      type: {class: FloatConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _value: 10
+    - rid: 3180810737205641435
+      type: {class: FloatConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _value: 1
+--- !u!1 &4590176155686529957
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8630475953801430173}
+  - component: {fileID: 2919631004769561364}
+  - component: {fileID: 7004289400907652215}
+  m_Layer: 0
+  m_Name: View
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8630475953801430173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4590176155686529957}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8226649906544979781}
+  m_Father: {fileID: 9134486656748277163}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2919631004769561364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4590176155686529957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9effbe4b19a346b1ba1c2f492408e133, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animatorView: {fileID: 7004289400907652215}
+  _stateAnimationConfigs:
+  - StateType: 0
+    AnimationConfig:
+      _animationState: Floppa_Idle1
+      _isRandomizeClip: 0
+      _isAnimationClipOverride: 0
+      _overrideAnimationClip: {fileID: 0}
+      _animationClip: {fileID: 7400000, guid: 75d2c379e8df0b6488703f5738a7a730, type: 2}
+      _animationClips: []
+      _layer: 0
+      _crossFadeTime: 0.25
+      _animationSpeed: 1
+  - StateType: 1
+    AnimationConfig:
+      _animationState: Floppa_Walk1
+      _isRandomizeClip: 0
+      _isAnimationClipOverride: 0
+      _overrideAnimationClip: {fileID: 0}
+      _animationClip: {fileID: 7400000, guid: 3f5cfd860fe4a7e4aa04209b1960e91f, type: 2}
+      _animationClips: []
+      _layer: 0
+      _crossFadeTime: 0.25
+      _animationSpeed: 1
+--- !u!114 &7004289400907652215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4590176155686529957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a21d424384a454d924e07a06f524c9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _runtimeAnimatorType: 0
+  _animationMixer: {fileID: 0}
+  _animator: {fileID: 2717535755871378395}
+  OnAnimationChange:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1001 &8475871245628360878
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8630475953801430173}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: e3a38c72f6501304b8fd56723d177fb5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e3a38c72f6501304b8fd56723d177fb5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e3a38c72f6501304b8fd56723d177fb5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e3a38c72f6501304b8fd56723d177fb5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e3a38c72f6501304b8fd56723d177fb5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e3a38c72f6501304b8fd56723d177fb5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e3a38c72f6501304b8fd56723d177fb5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e3a38c72f6501304b8fd56723d177fb5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e3a38c72f6501304b8fd56723d177fb5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e3a38c72f6501304b8fd56723d177fb5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2505442646259952881, guid: e3a38c72f6501304b8fd56723d177fb5, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e3a38c72f6501304b8fd56723d177fb5, type: 3}
+      propertyPath: m_Name
+      value: Floppa_v.2_2k_rigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e3a38c72f6501304b8fd56723d177fb5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2717535755871378395}
+  m_SourcePrefab: {fileID: 100100000, guid: e3a38c72f6501304b8fd56723d177fb5, type: 3}
+--- !u!4 &8226649906544979781 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e3a38c72f6501304b8fd56723d177fb5, type: 3}
+  m_PrefabInstance: {fileID: 8475871245628360878}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8746340311131583999 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e3a38c72f6501304b8fd56723d177fb5, type: 3}
+  m_PrefabInstance: {fileID: 8475871245628360878}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2717535755871378395
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8746340311131583999}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: e3a38c72f6501304b8fd56723d177fb5, type: 3}
+  m_Controller: {fileID: 9100000, guid: dfacdd3418b52a348aa67e1bb54780a3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
