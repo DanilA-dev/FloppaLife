@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Project.Scripts.Core.PlayerController.PlayerStates
+namespace D_Dev.PlayerStateController
 {
     public class PlayerIdleState : BasePlayerState
     {

@@ -2,7 +2,7 @@
 using D_Dev.Utility;
 using UnityEngine;
 
-namespace _Project.Scripts.Core.PlayerController
+namespace D_Dev.PlayerStateController
 {
     public class PlayerMovementHandler : MonoBehaviour
     {
@@ -15,7 +15,6 @@ namespace _Project.Scripts.Core.PlayerController
         
         private RotationHandler _rotationHandler;
         private RigidbodyMovementHandler _movementHandler;
-        private Camera _camera;
         
         #endregion
         
@@ -104,6 +103,9 @@ namespace _Project.Scripts.Core.PlayerController
         {
             var rootRight = _directionRoot.Value.right;
             var rootForward = _directionRoot.Value.forward;
+            rootRight.y = 0f;
+            rootForward.y = 0f;
+            
             _movementDirection.Value = rootRight * _rawInputDirection.Value.x + rootForward * _rawInputDirection.Value.z;
         }   
 

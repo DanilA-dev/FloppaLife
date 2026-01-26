@@ -1,21 +1,20 @@
 using D_Dev.InputSystem;
+using D_Dev.PolymorphicValueSystem;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _Project.Scripts.Core.PlayerController
+namespace D_Dev.PlayerStateController
 {
-    public class PlayerCameraController : MonoBehaviour
+    public class FreeLookCameraController : MonoBehaviour
     {
         #region Fields
 
         [Title("Camera Settings")]
         [SerializeField] private InputRouter _inputRouter; 
-        [SerializeField] private Transform _cameraRoot;
-        [SerializeField] private bool _rotateCharacterRootTransform = true;
+        [SerializeReference] private PolymorphicValue<Transform> _cameraRoot;
         [SerializeField] private float _topAngle = 80f;
         [SerializeField] private float _botAngle = -80f;
         [SerializeField] private float _rotationSpeed = 100f;
-        [SerializeField] private float _rotationSmoothTime = 0.1f;
         [SerializeField] private bool _isLocked;
         
         private const float CAMERA_ROTATION_THRESHOLD = 0.01f;
@@ -32,9 +31,9 @@ namespace _Project.Scripts.Core.PlayerController
 
         #region Properties
 
-        public Transform CameraRoot => _cameraRoot;
-        public Vector3 CameraForward => _cameraRoot.forward;
-        public Vector3 CameraRight => _cameraRoot.right;
+        public Transform CameraRoot => _cameraRoot.Value;
+        public Vector3 CameraForward => _cameraRoot.Value.forward;
+        public Vector3 CameraRight => _cameraRoot.Value.right;
 
         #endregion
 
@@ -84,8 +83,7 @@ namespace _Project.Scripts.Core.PlayerController
 
             _yaw = Mathf.Clamp(_yaw, float.MinValue, float.MaxValue);
             _pitch = Mathf.Clamp(_pitch, _botAngle, _topAngle);
-
-            _cameraRoot.rotation = Quaternion.Euler(_pitch, _yaw, 0.0f);
+            _cameraRoot.Value.rotation = Quaternion.Euler(_pitch, _yaw, 0.0f);
         }
         
         #endregion

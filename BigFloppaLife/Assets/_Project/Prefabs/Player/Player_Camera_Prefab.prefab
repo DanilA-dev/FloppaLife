@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 3317069460441653678}
   - component: {fileID: 3317069460441653672}
   - component: {fileID: 5318475311809403501}
+  - component: {fileID: 3386224551574386743}
   m_Layer: 0
   m_Name: Player_Camera_Prefab
   m_TagString: Untagged
@@ -176,3 +177,30 @@ MonoBehaviour:
   _target: {fileID: 11400000, guid: 132c127c82ec4b64da0611fbc43f2699, type: 2}
   _isFollow: 1
   _isLookAt: 0
+--- !u!114 &3386224551574386743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3317069460441653679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1369b3443431a234794bc75e5cf89276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputRouter: {fileID: 11400000, guid: b299fe18b864a6a448ae3ab79bd7d358, type: 2}
+  _cameraRoot:
+    rid: 3180810780262006858
+  _rotateCharacterRootTransform: 1
+  _topAngle: 80
+  _botAngle: -80
+  _rotationSpeed: 300
+  _isLocked: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 3180810780262006858
+      type: {class: TransformScriptableVariableValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _variable: {fileID: 11400000, guid: 132c127c82ec4b64da0611fbc43f2699, type: 2}

@@ -2,7 +2,7 @@ using D_Dev.PolymorphicValueSystem;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _Project.Scripts.Core.PlayerController.PlayerStates
+namespace D_Dev.PlayerStateController
 {
     public class PlayerRunState : BasePlayerState
     {

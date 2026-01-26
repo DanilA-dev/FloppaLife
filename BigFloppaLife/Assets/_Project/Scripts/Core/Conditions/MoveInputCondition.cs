@@ -3,7 +3,7 @@ using D_Dev.Base;
 using D_Dev.InputSystem;
 using UnityEngine;
 
-namespace _Project.Scripts.Core.PlayerController.Conditions
+namespace _Project.Scripts.Core.Conditions
 {
     [Serializable]
     public class MoveInputCondition : ICondition
@@ -17,7 +17,9 @@ namespace _Project.Scripts.Core.PlayerController.Conditions
         private bool _isMoving;
             
         #endregion
-        
+
+        #region ICondition
+
         public bool IsConditionMet()
         {
             if (!_isSubscribed)
@@ -29,13 +31,19 @@ namespace _Project.Scripts.Core.PlayerController.Conditions
             return _isMoving == _value;
         }
 
+        public void Reset()
+        {
+        }
+        
+        #endregion
+
+        #region Listeners
+
         private void OnMove(Vector2 move)
         {
             _isMoving = move != Vector2.zero;
         }
 
-        public void Reset()
-        {
-        }
+        #endregion
     }
 }

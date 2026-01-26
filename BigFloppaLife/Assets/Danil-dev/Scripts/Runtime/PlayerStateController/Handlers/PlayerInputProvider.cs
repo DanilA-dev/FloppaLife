@@ -2,7 +2,7 @@
 using D_Dev.PolymorphicValueSystem;
 using UnityEngine;
 
-namespace _Project.Scripts.Core.PlayerController
+namespace D_Dev.PlayerStateController
 {
     public class PlayerInputProvider : MonoBehaviour
     {
