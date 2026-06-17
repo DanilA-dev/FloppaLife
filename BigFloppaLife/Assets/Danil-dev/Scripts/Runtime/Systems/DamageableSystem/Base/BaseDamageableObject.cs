@@ -1,4 +1,5 @@
-﻿using D_Dev.PolymorphicValueSystem;
+﻿using System;
+using D_Dev.PolymorphicValueSystem;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,13 +11,23 @@ namespace D_Dev.DamageableSystem
         #region Fields
 
         [Title("Damageable Settings")] 
-        [SerializeReference] private PolymorphicValue<bool> _isDamageable;
+        [SerializeReference] private PolymorphicValue<bool> _isDamageable = new BoolConstantValue();
+        [SerializeReference] private PolymorphicValue<float> _lastTakenDamage = new FloatConstantValue();
+        [SerializeField] private bool _applyForceOnDamage;
+        [ShowIf(nameof(_applyForceOnDamage))]
+        [Title("Force On Damage Settings")]
+        [SerializeReference] private PolymorphicValue<float> _lastTakenForce = new FloatConstantValue();
+        [ShowIf(nameof(_applyForceOnDamage))]
+        [SerializeReference] private PolymorphicValue<Vector3> _lastTakenDirection = new Vector3ConstantValue();
+        [ShowIf(nameof(_applyForceOnDamage))]
+        [SerializeField] private Rigidbody _rigidbody;
         [PropertyOrder(100)]
         [FoldoutGroup("Events")]
         public UnityEvent<DamageData> OnDamage;
         [FoldoutGroup("Events")]
         [PropertyOrder(100)]
         public UnityEvent OnDeath;
+        public event Action<IDamageable> OnDeathCallback;
         
         #endregion
 
@@ -44,15 +55,29 @@ namespace D_Dev.DamageableSystem
             if(!_isDamageable.Value)
                 return;
             
+            _lastTakenDamage.Value = damageData.Damage;
             CurrentHealth -= damageData.Damage;
+            if (_applyForceOnDamage && damageData.Force > 0)
+            {
+                _lastTakenDirection.Value = damageData.ForceDirection;
+                _lastTakenForce.Value = damageData.Force;
+            }
+            
+            OnDamage?.Invoke(damageData);
             if(CurrentHealth <= 0)
                 OnDie();
+        }
+
+        public void Kill() => OnDie();
+        public virtual void Restore()
+        {
+            CurrentHealth = MaxHealth;
         }
 
         #endregion
 
         #region Virtual
-        protected virtual void Init() => CurrentHealth = MaxHealth;
+        public virtual void Init() => CurrentHealth = MaxHealth;
 
         #endregion
         
@@ -60,6 +85,7 @@ namespace D_Dev.DamageableSystem
         private void OnDie()
         {
             CurrentHealth = 0;
+            OnDeathCallback?.Invoke(this);
             OnDeath?.Invoke();
         }
 

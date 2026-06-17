@@ -16,15 +16,21 @@ namespace D_Dev.TimerSystem
 
         public override void Tick(float deltaTime)
         {
-            base.Tick(deltaTime);
-            if (IsRunning && Time > 0)
-                Time -= deltaTime;
-      
-            if(IsRunning && Time <= 0)
-                Stop();
-        }
+            if (!IsRunning)
+                return;
 
-        public override void Reset() => Time = _initialTime;
+            if (Time > 0)
+            {
+                Time -= deltaTime;
+                if (Time < 0)
+                    Time = 0;
+
+                OnProgressUpdate();
+            }
+
+            if (Time <= 0)
+                Complete();
+        }
 
         #endregion
 
@@ -32,7 +38,6 @@ namespace D_Dev.TimerSystem
 
         public void Reset(float newInitTime)
         {
-            base.Reset();
             _initialTime = newInitTime;
             Reset();
         }

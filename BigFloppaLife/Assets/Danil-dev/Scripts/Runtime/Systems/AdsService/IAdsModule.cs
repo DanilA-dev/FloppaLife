@@ -1,13 +1,15 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 
 namespace D_Dev.AdsService
 {
     public interface IAdsModule
     {
         public bool IsInitialized { get; }
-        public void Initialize();
-        public void ShowBannerAd(Action<bool> callback);
-        public void ShowInterstitialAd(Action<bool> callback);
-        public void ShowRewardedAd(Action<bool> callback);
+        public UniTask Initialize();
+        public void Dispose();
+        public void ShowBannerAd(Action<AdResult> callback);
+        public void ShowInterstitialAd(Action<AdResult> callback);
+        public void ShowRewardedAd(Action<AdResult> callback);
     }
 }

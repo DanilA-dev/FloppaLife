@@ -1,16 +1,16 @@
 using UnityEngine;
 
-namespace D_Dev.ScriptableVaiables.Setters
+namespace D_Dev.ScriptableVariables.Setters
 {
     public class BaseScriptableVariableSetter<T, TVariable> : MonoBehaviour where TVariable : BaseScriptableVariable<T>
     {
         #region Fields
 
-        [SerializeField] private TVariable _variable;
-        [SerializeField] private T _value;
+        [SerializeField] protected TVariable _variable;
+        [SerializeField] protected T _value;
         [Space]
-        [SerializeField] private bool _setOnAwake;
-        [SerializeField] private bool _setOnStart;
+        [SerializeField] protected bool _setOnAwake;
+        [SerializeField] protected bool _setOnStart;
 
         #endregion
 
@@ -34,9 +34,12 @@ namespace D_Dev.ScriptableVaiables.Setters
 
         public void SetValue(T value)
         {
+            if(_variable == null)
+                return;
+
             if(value == null)
                 return;
-            
+
             _variable.Value = value;
         }
 

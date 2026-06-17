@@ -1,6 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
-using D_Dev.Base;
+using D_Dev.Entity;
 using UnityEngine;
 
 namespace D_Dev.EntitySpawner
@@ -37,24 +38,51 @@ namespace D_Dev.EntitySpawner
 
         #region Public
 
-        public async UniTask CreateEntityAsync(int settingsIndex) => await GetEntityAsync(settingsIndex);
-        public async UniTask CreateEntityAsync(EntityInfo data) => await GetEntityAsync(data);
+        public async void CreateEntityAsync(int settingsIndex) => await GetEntitiesAsync(settingsIndex);
+        public async void CreateEntityAsync(EntityInfo data) => await GetEntitiesAsync(data);
+
+        public async void SpawnAll() => await SpawnAllAsync();
+
 
         #endregion
 
         #region Private
 
-        private async UniTask<GameObject> GetEntityAsync(EntityInfo data)
+        private async UniTask<List<GameObject>> SpawnAllAsync()
         {
-            var spawnSettings = _spawnSettings.FirstOrDefault(s => s.Data == data);
-            return spawnSettings != null ? await spawnSettings.Get() : null;
+            var allResults = new List<GameObject>();
+            foreach (var settings in _spawnSettings)
+                for (int i = 0; i < settings.Amount.Value; i++)
+                    allResults.Add(await settings.Get());
+            return allResults;
         }
+        
+        public async UniTask<List<GameObject>> GetEntitiesAsync(EntityInfo data)                  
+        {                                                 
+            var spawnSettings = _spawnSettings.           
+                FirstOrDefault(s => s.Data.Value == data);        
+            var results = new List<GameObject>();         
+                                                       
+            if (spawnSettings != null)                    
+                for (int i = 0; i < spawnSettings.        
+                         Amount.Value; i++)                                
+                    results.Add(await spawnSettings.Get());       
+                                                       
+            return results;                               
+        }               
 
-        private async UniTask<GameObject> GetEntityAsync(int settingsIndex)
+        public async UniTask<List<GameObject>> GetEntitiesAsync(int index)
         {
-            var spawnSettings = _spawnSettings[settingsIndex];
-            return spawnSettings != null ? await spawnSettings.Get() : null;
-        }
+            var spawnSettings = _spawnSettings[index];
+            var results = new List<GameObject>();         
+                                                       
+            if (spawnSettings != null)                    
+                for (int i = 0; i < spawnSettings.        
+                         Amount.Value; i++)                                
+                    results.Add(await spawnSettings.Get());       
+                                                       
+            return results;                               
+        }               
 
         #endregion
     }

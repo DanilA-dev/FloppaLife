@@ -23,15 +23,39 @@ namespace D_Dev.PositionRotationConfig
         
         #region Fields
 
-        [SerializeReference] private PolymorphicValue<Transform> _value;
+        [SerializeReference] private PolymorphicValue<Transform> _value = new TransformConstantValue();
         [SerializeField] private LocalDirection _direction;
+
+        
 
         #endregion
 
+        #region Properties
+
+        public PolymorphicValue<Transform> Value
+        {
+            get => _value;
+            set => _value = value;
+        }
+
+        public LocalDirection Direction
+        {
+            get => _direction;
+            set => _direction = value;
+        }
+
+        #endregion
+        
         #region Overrides
 
-        public override Vector3 GetPosition()
+        public override Vector3 OnGetPosition()
         {
+            if (_value?.Value == null)
+            {
+                Debug.Log($"[PositionSettings] Value is null, reset to Vector.zero");
+                return Vector3.zero;
+            }
+            
             return _direction switch
             {
                 LocalDirection.Up => _value.Value.up,

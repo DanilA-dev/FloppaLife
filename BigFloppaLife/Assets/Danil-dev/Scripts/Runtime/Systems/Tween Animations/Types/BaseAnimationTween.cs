@@ -1,4 +1,4 @@
-﻿#if DOTWEEN
+#if DOTWEEN
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -6,12 +6,24 @@ using UnityEngine.Events;
 
 namespace D_Dev.TweenAnimations.Types
 {
+    #region Enum
+
+    public enum MotionType
+    {
+        None = 0,
+        Shake = 1,
+        Punch = 2
+    }
+
+    #endregion
+    
     [System.Serializable]
     public abstract class BaseAnimationTween
     {
         #region Fields
 
         [SerializeField] protected float _duration;
+        [SerializeField] protected float _delay;
         [SerializeField] protected Ease _ease;
         [SerializeField] protected bool _ignoreTimeScale;
         [SerializeField] protected int _loops;
@@ -27,6 +39,7 @@ namespace D_Dev.TweenAnimations.Types
         public UnityEvent OnComplete;
 
         private Tween _tween;
+        private GameObject _target;
 
         #endregion
 
@@ -43,11 +56,21 @@ namespace D_Dev.TweenAnimations.Types
                 
                 _tween.OnStart((() => OnStart?.Invoke()));
                 _tween.SetEase(_ease)
+                    .SetDelay(_delay)
                     .SetLoops(_loops, _loopType)
                     .SetUpdate(_ignoreTimeScale)
                     .SetAutoKill();
+        
+                if (_target != null)
+                    _tween.SetLink(_target);
+                
                 _tween.OnComplete((() => OnComplete?.Invoke()));
             }
+        }
+
+        protected void SetTarget(GameObject target)
+        {
+            _target = target;
         }
 
         public float Duration
@@ -86,6 +109,32 @@ namespace D_Dev.TweenAnimations.Types
 
         public abstract Tween Play();
         public virtual void Pause() {}
+        public virtual void Kill() 
+        {
+            _tween?.Kill();
+            _tween = null;
+        }
+
+        #endregion
+
+        #region Protected
+
+        protected void SetTweenRaw(Tween tween)
+        {
+            _tween = tween;
+            if (_tween == null)
+                return;
+
+            _tween.OnStart(() => OnStart?.Invoke())
+                .SetDelay(_delay)
+                .SetUpdate(_ignoreTimeScale)
+                .SetAutoKill();
+
+            if (_target != null)
+                _tween.SetLink(_target);
+
+            _tween.OnComplete(() => OnComplete?.Invoke());
+        }
 
         #endregion
 

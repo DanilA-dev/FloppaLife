@@ -1,4 +1,4 @@
-using D_Dev.ScriptableVaiables;
+using D_Dev.ScriptableVariables;
 using D_Dev.TweenAnimations;
 using D_Dev.ValueViewProvider;
 using UnityEngine;
@@ -20,15 +20,10 @@ namespace D_Dev.ScriptableVariables.Extensions.ViewProviders
         protected virtual void OnEnable()
         {
             if (_variable != null)
+            {
                 _variable.OnValueUpdate += UpdateView;
-        }
-
-        protected virtual void Start()
-        {
-            if (_variable == null)
-                return;
-
-            UpdateView(_variable.Value);
+                UpdateView(_variable.Value);
+            }
         }
 
         protected virtual void OnDisable()

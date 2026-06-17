@@ -276,27 +276,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnSettings:
-  - _data: {fileID: 11400000, guid: c9c7ee40d260f7546a0641d6c2889da9, type: 2}
+  - _data:
+      rid: 421335455894077648
     _createOnStart: 1
-    _startEntitiesAmount: 1
+    _amount:
+      rid: 421335455894077649
     _setActiveOnStart: 1
     _setParent: 0
     _parentTransform: {fileID: 0}
     _positionSettings:
       rid: 3180810466386247974
+    _positionOffset: {x: 0, y: 0, z: 0}
     _rotationSettings:
       rid: 3180810466386247975
     _usePool: 0
     _applyPosConfigOnGet: 0
     _poolCollectionCheck: 0
+    _prewarm: 0
+    _prewarmAmount: 0
     _poolDefaultCapacity: 0
     _poolMaxSize: 0
+    _globalPool: {fileID: 0}
   references:
     version: 2
     RefIds:
+    - rid: 421335455894077648
+      type: {class: EntityInfoConstantValue, ns: D_Dev.Entity.Extensions, asm: D-Dev.EntityInfo.Extensions}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _value: {fileID: 0}
+    - rid: 421335455894077649
+      type: {class: IntConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _value: 0
     - rid: 3180810466386247974
       type: {class: BasePositionSettings, ns: D_Dev.PositionRotationConfig, asm: D-Dev.PositionRotationSettings}
-      data: 
+      data:
+        _useRandomSphere: 0
+        _radius: 0
+        _axis: 7
     - rid: 3180810466386247975
       type: {class: BaseRotationSettings, ns: D_Dev.PositionRotationConfig.RotationSettings, asm: D-Dev.PositionRotationSettings}
       data: 
@@ -345,56 +370,110 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnSettings:
-  - _data: {fileID: 11400000, guid: 2539e8cf6cb881b49a7d8babd2defba3, type: 2}
+  - _data:
+      rid: 421335455894077642
     _createOnStart: 1
-    _startEntitiesAmount: 1
+    _amount:
+      rid: 421335455894077643
     _setActiveOnStart: 1
     _setParent: 0
     _parentTransform: {fileID: 0}
     _positionSettings:
       rid: 3180810753464336660
+    _positionOffset: {x: 0, y: 0, z: 0}
     _rotationSettings:
       rid: 3180810466386247975
     _usePool: 0
     _applyPosConfigOnGet: 0
     _poolCollectionCheck: 0
+    _prewarm: 0
+    _prewarmAmount: 0
     _poolDefaultCapacity: 0
     _poolMaxSize: 0
-  - _data: {fileID: 11400000, guid: 007a7f2a9864333478dd472c7c6721f0, type: 2}
+    _globalPool: {fileID: 0}
+  - _data:
+      rid: 421335455894077644
     _createOnStart: 1
-    _startEntitiesAmount: 1
+    _amount:
+      rid: 421335455894077645
     _setActiveOnStart: 1
     _setParent: 0
     _parentTransform: {fileID: 0}
     _positionSettings:
       rid: 3180810737205641447
+    _positionOffset: {x: 0, y: 0, z: 0}
     _rotationSettings:
       rid: 3180810737205641448
     _usePool: 0
     _applyPosConfigOnGet: 0
     _poolCollectionCheck: 0
+    _prewarm: 0
+    _prewarmAmount: 0
     _poolDefaultCapacity: 0
     _poolMaxSize: 0
+    _globalPool: {fileID: 0}
   references:
     version: 2
     RefIds:
+    - rid: 421335455894077642
+      type: {class: EntityInfoConstantValue, ns: D_Dev.Entity.Extensions, asm: D-Dev.EntityInfo.Extensions}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _value: {fileID: 11400000, guid: 2539e8cf6cb881b49a7d8babd2defba3, type: 2}
+    - rid: 421335455894077643
+      type: {class: IntConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _value: 1
+    - rid: 421335455894077644
+      type: {class: EntityInfoConstantValue, ns: D_Dev.Entity.Extensions, asm: D-Dev.EntityInfo.Extensions}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _value: {fileID: 11400000, guid: 007a7f2a9864333478dd472c7c6721f0, type: 2}
+    - rid: 421335455894077645
+      type: {class: IntConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _value: 1
     - rid: 3180810466386247975
       type: {class: BaseRotationSettings, ns: D_Dev.PositionRotationConfig.RotationSettings, asm: D-Dev.PositionRotationSettings}
       data: 
     - rid: 3180810737205641447
       type: {class: BasePositionSettings, ns: D_Dev.PositionRotationConfig, asm: D-Dev.PositionRotationSettings}
-      data: 
+      data:
+        _useRandomSphere: 0
+        _radius: 0
+        _axis: 7
     - rid: 3180810737205641448
       type: {class: BaseRotationSettings, ns: D_Dev.PositionRotationConfig.RotationSettings, asm: D-Dev.PositionRotationSettings}
       data: 
     - rid: 3180810753464336660
       type: {class: Vector3PositionSettings, ns: D_Dev.PositionRotationConfig, asm: D-Dev.PositionRotationSettings}
       data:
+        _useRandomSphere: 0
+        _radius: 0
+        _axis: 7
         _value:
           rid: 3180810753464336661
     - rid: 3180810753464336661
       type: {class: Vector3ConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
       data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
         _value: {x: 1, y: 0, z: 0}
 --- !u!1 &765874699
 GameObject:

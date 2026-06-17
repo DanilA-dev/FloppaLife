@@ -1,4 +1,4 @@
-using D_Dev.ScriptableVaiables;
+using D_Dev.ScriptableVariables;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -13,6 +13,12 @@ namespace D_Dev.AudioSystem
         SimpleDelay = 1,
         ScheduledDelay = 2,
     }
+    
+    public enum MixerGroupType
+    {
+        SFX = 0,
+        Music = 1
+    }
 
     #endregion
     
@@ -22,8 +28,13 @@ namespace D_Dev.AudioSystem
         #region Fields
 
         [SerializeField] private StringScriptableVariable _audioConfigName;
-        [SerializeField] private AudioMixerGroup _soundMixer;
-        [Space]
+        [SerializeField] private AudioMixerGroup _soundMixerGroup;
+        [SerializeField] private MixerGroupType _mixerGroupType;
+
+        [Space] [Title("Base")] 
+        [SerializeField] private bool _routeThroughManager;
+        [Range(1f, 10f)]
+        [SerializeField] private int _priority = 1;
         [Title("Clips")]
         [HideIf(nameof(_isRandomClip))]
         [SerializeField] private AudioClip _clip;
@@ -33,8 +44,9 @@ namespace D_Dev.AudioSystem
         [Title("Audio Settings")]
         [HideIf(nameof(_isRandomVolume))]
         [Range(0, 1),SerializeField] private float _volume;
-        [HideIf(nameof(_isRandomPitch))]
-        [SerializeField] private float _pitch;
+
+        [HideIf(nameof(_isRandomPitch))] 
+        [SerializeField] private float _pitch = 1;
         [SerializeField] private bool _isRandomVolume;
         [SerializeField] private bool _isRandomPitch;
         [ShowIf(nameof(_isRandomVolume))]
@@ -67,8 +79,8 @@ namespace D_Dev.AudioSystem
 
         public AudioMixerGroup SoundMixer
         {
-            get => _soundMixer;
-            set => _soundMixer = value;
+            get => _soundMixerGroup;
+            set => _soundMixerGroup = value;
         }
 
         public AudioClip Clip
@@ -178,6 +190,24 @@ namespace D_Dev.AudioSystem
             get => _delayType;
             set => _delayType = value;
         }
+        
+        public bool RouteThroughManager
+        {
+            get => _routeThroughManager;
+            set => _routeThroughManager = value;
+        }
+
+        public int Priority
+        {
+            get => _priority;
+            set => _priority = value;
+        }
+
+        public MixerGroupType GroupType
+        {
+            get => _mixerGroupType;
+            set => _mixerGroupType = value;
+        }
 
         #endregion
 
@@ -188,8 +218,11 @@ namespace D_Dev.AudioSystem
             audioSource.clip = GetClip();
             audioSource.volume = _isRandomVolume ? Random.Range(_minVolume, _maxVolume) : _volume;
             audioSource.pitch = _isRandomPitch ? Random.Range(_minPitch, _maxPitch) : _pitch;
+            audioSource.priority = _priority;
             audioSource.loop = _isLooping;
             audioSource.playOnAwake = _playOnAwake;
+            audioSource.outputAudioMixerGroup = _soundMixerGroup;
+            audioSource.spatialBlend = _spatialBlend;
         }
 
         public AudioClip GetClip() => _isRandomClip ? _clips[Random.Range(0, _clips.Length)] : _clip;

@@ -1,5 +1,5 @@
-using System;
-using D_Dev.ScriptableVaiables;
+using System.Linq;
+using D_Dev.ScriptableVariables;
 using UnityEngine;
 
 namespace D_Dev.PolymorphicValueSystem
@@ -8,24 +8,8 @@ namespace D_Dev.PolymorphicValueSystem
     public abstract class StringValue : PolymorphicValue<string> { }
 
     [System.Serializable]
-    public sealed class StringConstantValue : StringValue
+    public sealed class StringConstantValue : ConstantValue<string>
     {
-        #region Fields
-
-        [SerializeField] private string _value;
-
-        #endregion
-
-        #region Properties
-
-        public override string Value
-        {
-            get => _value;
-            set => _value = value;
-        }
-
-        #endregion
-
         #region Cloning
 
         public override PolymorphicValue<string> Clone()
@@ -37,11 +21,11 @@ namespace D_Dev.PolymorphicValueSystem
     }
 
     [System.Serializable]
-    public sealed class StringScriptableVariableValue : StringValue
+    public sealed class StringFromGameObjectName : StringValue
     {
         #region Fields
 
-        [SerializeField] private StringScriptableVariable _variable;
+        [SerializeReference] private PolymorphicValue<GameObject> _gameObject = new GameObjectConstantValue();
 
         #endregion
 
@@ -49,18 +33,9 @@ namespace D_Dev.PolymorphicValueSystem
 
         public override string Value
         {
-            get
-            {
-                return _variable != null ? _variable.Value : default;
-            }
-            set
-            {
-                if (_variable != null)
-                    _variable.Value = value;
-            }
+            get => _gameObject.Value.name;
+            set {}
         }
-
-        public StringScriptableVariable Variable => _variable;
 
         #endregion
 
@@ -68,7 +43,44 @@ namespace D_Dev.PolymorphicValueSystem
 
         public override PolymorphicValue<string> Clone()
         {
+            return new StringFromGameObjectName { Value = Value };
+        }
+
+        #endregion
+    }
+
+    [System.Serializable]
+    public sealed class StringScriptableVariableValue : ScriptableVariableValue<StringScriptableVariable,string>
+    {
+        #region Cloning
+
+        public override PolymorphicValue<string> Clone()
+        {
             return new StringScriptableVariableValue { _variable = _variable };
+        }
+
+        #endregion
+    }
+
+    [System.Serializable]
+    public sealed class StringConcatValue : StringValue
+    {
+        #region Fields
+
+        [SerializeReference] private PolymorphicValue<string>[] _values;
+
+        #endregion
+        
+        #region Properties
+        public override string Value
+        {
+            get => string.Concat(_values.Select(x => x.Value));
+            set {}
+        }
+
+        public override PolymorphicValue<string> Clone()
+        {
+            return new StringConcatValue() { Value = Value };
         }
 
         #endregion

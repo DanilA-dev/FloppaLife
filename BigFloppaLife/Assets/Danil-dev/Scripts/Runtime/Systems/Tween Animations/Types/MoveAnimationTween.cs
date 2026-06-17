@@ -1,5 +1,7 @@
-﻿#if DOTWEEN
+#if DOTWEEN
 using System;
+using System.Collections.Generic;
+using D_Dev.PolymorphicValueSystem;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -20,45 +22,42 @@ namespace D_Dev.TweenAnimations.Types
             Transform
         }
 
-        public enum MoveMotionType
-        {
-            None = 0,
-            Shake = 1,
-            Punch = 2
-        }
-
         #endregion
 
         #region Fields
 
+        [SerializeField] private MotionType _motionType;
+        [SerializeField] private Transform[] _movedObjects;
+        [ShowIf(nameof(_motionType), MotionType.None)]
         [SerializeField] private MoveObjectType _moveObjectType;
-        [SerializeField] private MoveMotionType _moveMotionType;
-        [SerializeField] private Transform _movedObject;
+        [ShowIf(nameof(_motionType), MotionType.None)]
         [SerializeField] private bool _useInitialPositionAsStart;
-        [ShowIf("@!_useInitialPositionAsStart && this._moveObjectType == MoveObjectType.Transform")]
-        [SerializeField] private Transform _moveStart;
-        [ShowIf(nameof(_moveObjectType), MoveObjectType.Transform)]
-        [SerializeField] private Transform _moveEnd;
-        [ShowIf("@!_useInitialPositionAsStart && this._moveObjectType != MoveObjectType.Transform")]
+
+        [ShowIf("@_motionType == MotionType.None && !_useInitialPositionAsStart && this._moveObjectType == MoveObjectType.Transform")]
+        [SerializeReference] private PolymorphicValue<Transform> _moveStart = new TransformConstantValue();
+        [ShowIf("@_motionType == MotionType.None && this._moveObjectType == MoveObjectType.Transform")]
+        [SerializeReference] private PolymorphicValue<Transform> _moveEnd = new TransformConstantValue();
+        [ShowIf("@_motionType == MotionType.None && !_useInitialPositionAsStart && this._moveObjectType != MoveObjectType.Transform")]
         [SerializeField] private Vector3 _positionStart;
-        [ShowIf("@this._moveObjectType != MoveObjectType.Transform")]
+        [ShowIf("@_motionType == MotionType.None && this._moveObjectType != MoveObjectType.Transform")]
         [SerializeField] private Vector3 _positionEnd;
-        [ShowIf(nameof(_moveMotionType), MoveMotionType.Shake)]
+        [ShowIf(nameof(_motionType), MotionType.Shake)]
         [SerializeField] private Vector3 _shakeStrength = Vector3.one;
-        [ShowIf(nameof(_moveMotionType), MoveMotionType.Shake)]
+        [ShowIf(nameof(_motionType), MotionType.Shake)]
         [SerializeField] private int _vibratoShake = 10;
-        [ShowIf(nameof(_moveMotionType), MoveMotionType.Shake)]
+        [ShowIf(nameof(_motionType), MotionType.Shake)]
         [SerializeField] private float _randomnessShake = 90f;
-        [ShowIf(nameof(_moveMotionType), MoveMotionType.Shake)]
+        [ShowIf(nameof(_motionType), MotionType.Shake)]
         [SerializeField] private bool _fadeOutShake = true;
-        [ShowIf(nameof(_moveMotionType), MoveMotionType.Punch)]
+        [ShowIf(nameof(_motionType), MotionType.Punch)]
         [SerializeField] private Vector3 _punch = Vector3.one;
-        [ShowIf(nameof(_moveMotionType), MoveMotionType.Punch)]
+        [ShowIf(nameof(_motionType), MotionType.Punch)]
         [SerializeField] private int _vibratoPunch = 10;
-        [ShowIf(nameof(_moveMotionType), MoveMotionType.Punch)]
+        [ShowIf(nameof(_motionType), MotionType.Punch)]
         [SerializeField] private float _elasticityPunch = 1f;
 
-        private Vector3 _initialStartPos;
+        private Dictionary<Transform, Vector3> _cachedPositions = new();
+
 
         #endregion
 
@@ -70,16 +69,16 @@ namespace D_Dev.TweenAnimations.Types
             set => _moveObjectType = value;
         }
 
-        public MoveMotionType MotionType
+        public MotionType Motion
         {
-            get => _moveMotionType;
-            set => _moveMotionType = value;
+            get => _motionType;
+            set => _motionType = value;
         }
 
-        public Transform MovedObject
+        public Transform[] MovedObjects
         {
-            get => _movedObject;
-            set => _movedObject = value;
+            get => _movedObjects;
+            set => _movedObjects = value;
         }
 
         public bool UseInitialPositionAsStart
@@ -88,13 +87,13 @@ namespace D_Dev.TweenAnimations.Types
             set => _useInitialPositionAsStart = value;
         }
 
-        public Transform MoveStart
+        public PolymorphicValue<Transform> MoveStart
         {
             get => _moveStart;
             set => _moveStart = value;
         }
 
-        public Transform MoveEnd
+        public PolymorphicValue<Transform> MoveEnd
         {
             get => _moveEnd;
             set => _moveEnd = value;
@@ -160,20 +159,62 @@ namespace D_Dev.TweenAnimations.Types
 
         public override Tween Play()
         {
-            switch (_moveMotionType)
+            if (_movedObjects == null || _movedObjects.Length == 0)
+                return null;
+
+            Sequence sequence = DOTween.Sequence();
+            
+            foreach (var movedObject in _movedObjects)
             {
-                case MoveMotionType.None:
-                    Tween = PlayMoveTween();
-                    break;
-                case MoveMotionType.Shake:
-                    Tween = _movedObject.DOShakePosition(Duration, _shakeStrength, _vibratoShake, _randomnessShake, _fadeOutShake);
-                    break;
-                case MoveMotionType.Punch:
-                    Tween = _movedObject.DOPunchPosition(_punch, Duration, _vibratoPunch, _elasticityPunch);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                if (movedObject == null)
+                    continue;
+
+                if (!_cachedPositions.ContainsKey(movedObject))
+                {
+                    RectTransform rect = movedObject.GetComponent<RectTransform>();
+                    _cachedPositions[movedObject] = rect ? rect.anchoredPosition : movedObject.position;
+                }
+
+                Tween objectTween = null;
+                switch (_motionType)
+                {
+                    case MotionType.None:
+                        objectTween = PlayMoveTween(movedObject);
+                        break;
+                    case MotionType.Shake:
+                        {
+                            RectTransform rect = movedObject.GetComponent<RectTransform>();
+                            if (rect)
+                                rect.anchoredPosition = _cachedPositions[movedObject];
+                            else
+                                movedObject.position = _cachedPositions[movedObject];
+                            objectTween = movedObject.DOShakePosition(Duration, _shakeStrength, _vibratoShake, _randomnessShake, _fadeOutShake)
+                                .SetEase(_ease)
+                                .SetLoops(_loops, _loopType);
+                            break;
+                        }
+                    case MotionType.Punch:
+                        {
+                            RectTransform rect = movedObject.GetComponent<RectTransform>();
+                            if (rect)
+                                rect.anchoredPosition = _cachedPositions[movedObject];
+                            else
+                                movedObject.position = _cachedPositions[movedObject];
+                            objectTween = movedObject.DOPunchPosition(_punch, Duration, _vibratoPunch, _elasticityPunch)
+                                .SetEase(_ease)
+                                .SetLoops(_loops, _loopType);
+                            break;
+                        }
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                
+                if (objectTween != null)
+                    sequence.Join(objectTween);
             }
+            
+            SetTarget(_movedObjects[0]?.gameObject);
+            SetTweenRaw(sequence);
             return Tween;
         }
 
@@ -181,76 +222,85 @@ namespace D_Dev.TweenAnimations.Types
 
         #region Private
 
-        private Tween PlayMoveTween()
+        private Tween PlayMoveTween(Transform movedObject)
         {
-            RectTransform rect = _movedObject.GetComponent<RectTransform>();
-            _initialStartPos = rect ? rect.anchoredPosition : _movedObject.position;
+            RectTransform rect = movedObject.GetComponent<RectTransform>();
+            Vector3 initialStartPos = rect ? rect.anchoredPosition : movedObject.position;
             switch (_moveObjectType)
             {
                 case MoveObjectType.Vector:
-                    return VectorWorldTween();
+                    return VectorWorldTween(movedObject, initialStartPos);
                 case MoveObjectType.Transform:
-                    return TransfromTween();
+                    return TransformTween(movedObject, initialStartPos);
                 case MoveObjectType.X:
-                    return XTween();
+                    return XTween(movedObject, initialStartPos);
                 case MoveObjectType.Y:
-                    return YTween();
+                    return YTween(movedObject, initialStartPos);
                 case MoveObjectType.Z:
-                    return ZTween();
+                    return ZTween(movedObject, initialStartPos);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private Tween TransfromTween()
+        private Tween TransformTween(Transform movedObject, Vector3 initialStartPos)
         {
-            RectTransform rect = _movedObject.GetComponent<RectTransform>();
-            return !rect
-                ? _movedObject.DOMove(_moveEnd.position, Duration)
-                    .From(!_useInitialPositionAsStart? _moveStart.position : _initialStartPos)
-                : rect.DOAnchorPos(_moveEnd.position, Duration)
-                    .From(!_useInitialPositionAsStart? _moveStart.position : _initialStartPos);
-
+            RectTransform rect = movedObject.GetComponent<RectTransform>();
+            Tween tween = !rect
+                ? movedObject.DOMove(_moveEnd.Value.position, Duration)
+                    .From(!_useInitialPositionAsStart? _moveStart.Value.position : initialStartPos)
+                : rect.DOAnchorPos(_moveEnd.Value.position, Duration)
+                    .From(!_useInitialPositionAsStart? _moveStart.Value.position : initialStartPos);
+            
+            return tween.SetEase(_ease).SetLoops(_loops, _loopType);
         }
 
-        private Tween YTween()
+        private Tween YTween(Transform movedObject, Vector3 initialStartPos)
         {
-            RectTransform rect = _movedObject.GetComponent<RectTransform>();
-            return !rect
-                ? _movedObject.DOLocalMoveY(_positionEnd.y, Duration)
-                    .From(!_useInitialPositionAsStart? _positionStart.y : _initialStartPos.y)
+            RectTransform rect = movedObject.GetComponent<RectTransform>();
+            Tween tween = !rect
+                ? movedObject.DOLocalMoveY(_positionEnd.y, Duration)
+                    .From(!_useInitialPositionAsStart? _positionStart.y : initialStartPos.y)
                 : rect.DOAnchorPosY(_positionEnd.y, Duration)
                     .From(!_useInitialPositionAsStart? new Vector2(rect.anchoredPosition.x, _positionStart.y) 
-                        : new Vector2(rect.anchoredPosition.x, _initialStartPos.y));
+                        : new Vector2(rect.anchoredPosition.x, initialStartPos.y));
+            
+            return tween.SetEase(_ease).SetLoops(_loops, _loopType);
         }
         
-        private Tween XTween()
+        private Tween XTween(Transform movedObject, Vector3 initialStartPos)
         {
-            RectTransform rect = _movedObject.GetComponent<RectTransform>();
-            return !rect
-                ? _movedObject.DOLocalMoveX(_positionEnd.x, Duration)
-                    .From(!_useInitialPositionAsStart? _positionStart.x : _initialStartPos.x)
+            RectTransform rect = movedObject.GetComponent<RectTransform>();
+            Tween tween = !rect
+                ? movedObject.DOLocalMoveX(_positionEnd.x, Duration)
+                    .From(!_useInitialPositionAsStart? _positionStart.x : initialStartPos.x)
                 : rect.DOAnchorPosX(_positionEnd.x, Duration)
                     .From(!_useInitialPositionAsStart? new Vector2(_positionStart.x, rect.anchoredPosition.y) 
-                        : new Vector2(_initialStartPos.x, rect.anchoredPosition.y));
+                        : new Vector2(initialStartPos.x, rect.anchoredPosition.y));
+            
+            return tween.SetEase(_ease).SetLoops(_loops, _loopType);
         }
         
-        private Tween ZTween()
+        private Tween ZTween(Transform movedObject, Vector3 initialStartPos)
         {
-            RectTransform rect = _movedObject.GetComponent<RectTransform>();
+            RectTransform rect = movedObject.GetComponent<RectTransform>();
             if(rect)
                 Debug.LogError($"Trying to move by z axis, by moved object is RectTransform");
-            return _movedObject.DOLocalMoveZ(_positionEnd.z, Duration);
-
+            Tween tween = movedObject.DOLocalMoveZ(_positionEnd.z, Duration)
+                .From(!_useInitialPositionAsStart? _positionStart.z : initialStartPos.z);
+            
+            return tween.SetEase(_ease).SetLoops(_loops, _loopType);
         }
         
-        private Tween VectorWorldTween()
+        private Tween VectorWorldTween(Transform movedObject, Vector3 initialStartPos)
         {
-            RectTransform rect = _movedObject.GetComponent<RectTransform>();
-            return !rect? _movedObject.DOMove(_positionEnd, Duration)
-                .From(!_useInitialPositionAsStart? _positionStart : _initialStartPos)
+            RectTransform rect = movedObject.GetComponent<RectTransform>();
+            Tween tween = !rect? movedObject.DOMove(_positionEnd, Duration)
+                .From(!_useInitialPositionAsStart? _positionStart : initialStartPos)
                     : rect.DOAnchorPos(_positionEnd, Duration)
-                        .From(!_useInitialPositionAsStart? _positionStart : _initialStartPos);
+                        .From(!_useInitialPositionAsStart? _positionStart : initialStartPos);
+            
+            return tween.SetEase(_ease).SetLoops(_loops, _loopType);
         }
 
         #endregion

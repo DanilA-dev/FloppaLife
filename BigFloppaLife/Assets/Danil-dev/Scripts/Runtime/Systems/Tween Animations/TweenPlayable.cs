@@ -1,4 +1,4 @@
-﻿#if DOTWEEN
+#if DOTWEEN
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -23,7 +23,10 @@ namespace D_Dev.TweenAnimations
         #region Fields
 
         [SerializeField] private PlayMode _playMode;
+        [SerializeField] private bool _ignoreTimeScale;
         [SerializeReference] protected List<BaseAnimationTween> _tweens = new();
+        
+        private Sequence _currentSequence;
         
         public event Action OnStart;
         public event Action OnComplete;
@@ -35,26 +38,26 @@ namespace D_Dev.TweenAnimations
         public void Play()
         {
             if (!HasTweensInArray())
-                return;
+                return; 
 
+            Kill();
             OnStart?.Invoke();
 
-            var seq = DOTween.Sequence();
-
+            _currentSequence = DOTween.Sequence();
             if (_playMode == PlayMode.Parallel)
             {
                 foreach (var tween in _tweens)
-                    seq.Join(tween.Play());
+                    _currentSequence.Join(tween.Play());
             }
             else
             {
                 foreach (var tween in _tweens)
-                    seq.Append(tween.Play());
+                    _currentSequence.Append(tween.Play());
             }
 
-            seq.SetAutoKill(true);
-            var lastTween = _tweens[^1];
-            lastTween.OnComplete.AddListener(OnTweensComplete);
+            _currentSequence.SetAutoKill(true)
+                .SetUpdate(_ignoreTimeScale)
+                .OnComplete(OnTweensComplete);
         }
 
         public void Play(int index)
@@ -62,6 +65,7 @@ namespace D_Dev.TweenAnimations
             if (!HasTweensInArray() || index < 0 || index >= _tweens.Count)
                 return;
 
+            Kill();
             OnStart?.Invoke();
 
             _tweens[index].Play();
@@ -75,6 +79,52 @@ namespace D_Dev.TweenAnimations
 
             foreach (var tween in _tweens)
                 tween.Pause();
+        }
+
+        public void Kill()
+        {
+            if (!HasTweensInArray())
+                return;
+
+            _currentSequence?.Kill();
+            _currentSequence = null;
+
+            foreach (var tween in _tweens)
+            {
+                tween.Kill();
+                tween.OnComplete.RemoveAllListeners();
+            }
+        }
+
+        public void Rewind()
+        {
+            if (!HasTweensInArray())
+                return;
+
+            if (_currentSequence != null && _currentSequence.IsActive())
+            {
+                _currentSequence.Rewind();
+                return;
+            }
+
+            Kill();
+
+            _currentSequence = DOTween.Sequence();
+            if (_playMode == PlayMode.Parallel)
+            {
+                foreach (var tween in _tweens)
+                    _currentSequence.Join(tween.Play());
+            }
+            else
+            {
+                foreach (var tween in _tweens)
+                    _currentSequence.Append(tween.Play());
+            }
+
+            _currentSequence.SetAutoKill(false)
+                .SetUpdate(_ignoreTimeScale);
+
+            _currentSequence.Rewind();
         }
 
         #endregion

@@ -1,18 +1,14 @@
-using System;
-using System.Collections.Generic;
-using D_Dev.ScriptableVaiables;
+using D_Dev.ScriptableVariables;
 using UnityEngine;
 
 namespace D_Dev.EntityVariable.Types
 {
     [System.Serializable]
-    public abstract class PolymorphicEntityVariable<T> : BaseEntityVariable
+    public abstract class PolymorphicEntityVariable<T> : BaseEntityVariable 
     {
         #region Fields
 
         [SerializeReference] protected T _value;
-        
-        public event Action<T> OnVariableChange;
 
         #endregion
 
@@ -21,14 +17,7 @@ namespace D_Dev.EntityVariable.Types
         public T Value
         {
             get => _value;
-            set
-            {
-                if (!EqualityComparer<T>.Default.Equals(_value, value))
-                {
-                    _value = value;
-                    OnVariableChange?.Invoke(_value);
-                }
-            }
+            set => _value = value;
         }
 
         #endregion

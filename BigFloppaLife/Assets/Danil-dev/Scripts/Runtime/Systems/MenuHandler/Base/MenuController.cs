@@ -46,7 +46,7 @@ namespace D_Dev.MenuHandler
 
         #region Public
 
-        public void CreateMenus()
+        public async void CreateMenus()
         {
             if (_menuInfos.Count <= 0)
             {
@@ -56,10 +56,7 @@ namespace D_Dev.MenuHandler
 
             foreach (var menuInfo in _menuInfos)
             {
-                var menuParent = menuInfo.Canvas == 
-                                 MenuInfo.CanvasType.Overlay ? _overlayCanvas : _cameraCanvas;
-                var newMenu = Instantiate(menuInfo.MenuPrefab, menuParent);
-                newMenu.gameObject.SetActive(false);
+                var newMenu = await CreateMenu(menuInfo);
                 if(menuInfo.OpenOnCreate)
                     newMenu.Open();
                 
@@ -67,10 +64,16 @@ namespace D_Dev.MenuHandler
             }
         }
 
-        public void OpenMenu(MenuInfo menuInfo)
+        public async void OpenMenu(MenuInfo menuInfo)
         {
             if(_createdMenus.TryGetValue(menuInfo, out var menu))
                 menu.Open();
+            else
+            {
+                var newMenu = await CreateMenu(menuInfo);
+                _createdMenus.TryAdd(menuInfo,newMenu);
+                newMenu.Open();
+            }
         }
 
         public void CloseMenu(MenuInfo menuInfo)
@@ -79,7 +82,6 @@ namespace D_Dev.MenuHandler
                 menu.Close();
         }
 
-        
         public void CloseAllMenus()
         {
             if(_createdMenus.Count <= 0)
@@ -129,6 +131,20 @@ namespace D_Dev.MenuHandler
                         cancellationToken: _instance.GetCancellationTokenOnDestroy());
             }
             catch (OperationCanceledException e) {}
+        }
+
+        #endregion
+
+        #region Private
+
+        private async UniTask<BaseMenu> CreateMenu(MenuInfo menuInfo)
+        {
+            var menuParent = menuInfo.Canvas == 
+                             MenuInfo.CanvasType.Overlay ? _overlayCanvas : _cameraCanvas;
+            var newMenu  = await menuInfo.MenuPrefab.InstantiateAsync();
+            newMenu.transform.SetParent(menuParent, false);
+            newMenu.gameObject.SetActive(false);
+            return newMenu.GetComponent<BaseMenu>();
         }
 
         #endregion

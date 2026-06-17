@@ -2,8 +2,10 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Cysharp.Threading.Tasks;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.AddressableAssets;
+#endif
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace D_Dev.AddressablesExstensions
@@ -16,6 +18,7 @@ namespace D_Dev.AddressablesExstensions
         [OnValueChanged(nameof(OnUseAddressablesChanged))]
         [SerializeField] protected bool _makeAddressable;
         [HideIf(nameof(_makeAddressable))]
+        [OnValueChanged(nameof(OnAssetFieldUpdate))]
         [SerializeField] protected T _asset;
         [ShowIf(nameof(_makeAddressable))]
         [SerializeField] protected AssetReference _assetReference;
@@ -102,6 +105,12 @@ namespace D_Dev.AddressablesExstensions
             }
 #endif
         }
+
+        #endregion
+
+        #region Protected
+
+        protected virtual void OnAssetFieldUpdate() {}
 
         #endregion
     }

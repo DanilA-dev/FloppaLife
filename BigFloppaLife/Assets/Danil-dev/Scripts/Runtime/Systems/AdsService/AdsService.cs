@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using D_Dev.Singleton;
 using UnityEngine;
 
 namespace D_Dev.AdsService
@@ -13,10 +15,20 @@ namespace D_Dev.AdsService
         Rewarded
     }
 
+    public enum AdResult
+    {
+        Shown, 
+        Rewarded,  
+        Skipped,    
+        Failed,     
+        NotSupported
+    }
+
     #endregion
     
-    public class AdsService : MonoBehaviour
+    public class AdsService : BaseSingleton<AdsService>
     {
+        
         #region Fields
 
         [SerializeField] private bool _loadAllTypesOnStart = true;
@@ -24,9 +36,9 @@ namespace D_Dev.AdsService
 
         private Dictionary<AdType, bool> _adTypes = new Dictionary<AdType, bool>
         {
-            { AdType.Banner, true },
-            { AdType.Interstitial, true },
-            { AdType.Rewarded, true }
+            { AdType.Banner, false },
+            { AdType.Interstitial, false },
+            { AdType.Rewarded, false }
         };
 
         #endregion
@@ -34,6 +46,7 @@ namespace D_Dev.AdsService
         #region Monobehaviour
 
         private void Start() => InitializeAdsModules();
+        private void OnDestroy() => DisposeAdsModules();
 
         #endregion
 
@@ -45,94 +58,117 @@ namespace D_Dev.AdsService
         
         public void LoadAllAdTypes()
         {
-            foreach (var (adType, isLoaded) in _adTypes)
+            foreach (var adType in _adTypes.Keys.ToList())
                 SetAdTypeLoadState(adType, true);
         }
 
-
-        public void ShowBanner(Action<bool> callback)
+        public void ShowBanner(Action<AdResult> callback)
         {
             if (!_adTypes[AdType.Banner])
             {
                 Debug.Log("[AdsService] Banner ad is not loaded");
-                callback?.Invoke(false);
+                callback?.Invoke(AdResult.Failed);
                 return;
             }
         
             foreach (var module in _adsModules)
             {
+                if(module == null)
+                    continue;
+                
                 if (module.IsInitialized)
                 {
-                    module.ShowBannerAd((adShown) => {
-                        Debug.Log("[AdsService] " + module.GetType().Name + " banner ad shown: " + adShown);
-                        callback?.Invoke(adShown);
+                    module.ShowBannerAd((result) => {
+                        Debug.Log("[AdsService] " + module.GetType().Name + " banner ad result: " + result);
+                        callback?.Invoke(result);
                     });
                     return;
                 }
             }
         
             Debug.Log("[AdsService] No banner ad modules are initialized");
-            callback?.Invoke(false);
+            callback?.Invoke(AdResult.Failed);
         }
 
-        public void ShowInterstitial(Action<bool> callback)
+        public void ShowInterstitial(Action<AdResult> callback)
         {
             if (!_adTypes[AdType.Interstitial])
             {
                 Debug.Log("[AdsService] Interstitial ad is not loaded");
-                callback?.Invoke(false);
+                callback?.Invoke(AdResult.Failed);
                 return;
             }
-
+ 
             foreach (var module in _adsModules)
             {
+                if (module == null) continue;
                 if (module.IsInitialized)
                 {
-                    module.ShowInterstitialAd(callback);
-                    Debug.Log("[AdsService] " + module.GetType().Name + " interstitial ad shown: true");
+                    module.ShowInterstitialAd((result) => {
+                        Debug.Log($"[AdsService] {module.GetType().Name} interstitial ad result: {result}");
+                        callback?.Invoke(result);
+                    });
                     return;
                 }
             }
-
+ 
             Debug.Log("[AdsService] No interstitial ad modules are initialized");
-            callback?.Invoke(false);
+            callback?.Invoke(AdResult.Failed);
         }
 
-        public void ShowRewarded(Action<bool> callback)
+        public void ShowRewarded(Action<AdResult> callback)
         {
             if (!_adTypes[AdType.Rewarded])
             {
                 Debug.Log("[AdsService] Rewarded ad is not loaded");
-                callback?.Invoke(false);
+                callback?.Invoke(AdResult.Failed);
                 return;
             }
-
+ 
             foreach (var module in _adsModules)
             {
+                if (module == null) continue;
                 if (module.IsInitialized)
                 {
-                    module.ShowRewardedAd(callback);
-                    Debug.Log("[AdsService] " + module.GetType().Name + " rewarded ad shown: true");
+                    module.ShowRewardedAd((result) => {
+                        Debug.Log($"[AdsService] {module.GetType().Name} rewarded ad result: {result}");
+                        callback?.Invoke(result);
+                    });
                     return;
                 }
             }
-
+ 
             Debug.Log("[AdsService] No rewarded ad modules are initialized");
-            callback?.Invoke(false);
+            callback?.Invoke(AdResult.Failed);
         }
+        
         #endregion
 
         #region Private
-        private void InitializeAdsModules()
+        private async void InitializeAdsModules()
         {
             foreach (var module in _adsModules)
             {
-                module.Initialize();
+                if(module == null)
+                    continue;
+                
+                await module.Initialize();
                 Debug.Log($"[AdsModule] Initialized module {module.GetType().Name}");
             }
             
             if(_loadAllTypesOnStart)
                 LoadAllAdTypes();
+        }
+
+        private void DisposeAdsModules()
+        {
+            foreach (var module in _adsModules)
+            {
+                if(module == null)
+                    continue;
+                
+                module.Dispose();
+            }
         }
         #endregion
     }
