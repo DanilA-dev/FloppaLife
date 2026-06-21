@@ -251,6 +251,14 @@ MonoBehaviour:
     - rid: 421335455894078050
     _fixedConditions: []
   - _fromStates:
+    - rid: 421335540934639769
+    _conditions:
+    - rid: 421335540934639770
+    - rid: 421335540934639776
+    - rid: 421335540934639771
+    - rid: 421335540934639772
+    _fixedConditions: []
+  - _fromStates:
     - rid: 421335455894077916
     _conditions:
     - rid: 421335455894078099
@@ -265,6 +273,7 @@ MonoBehaviour:
     rid: 421335455894077662
   _accelerationSpeed:
     rid: 421335455894077663
+  _preserveMomentum: 0
   _rotateRoot:
     rid: 421335455894077665
   _rotateSpeed:
@@ -295,7 +304,7 @@ MonoBehaviour:
         OnValueChanged:
           m_PersistentCalls:
             m_Calls: []
-        _value: 1.75
+        _value: 1.35
     - rid: 421335455894077663
       type: {class: FloatConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
       data:
@@ -435,6 +444,63 @@ MonoBehaviour:
           m_PersistentCalls:
             m_Calls: []
         _variable: {fileID: 11400000, guid: a605362cb7f572241b5fde9c41933e89, type: 2}
+    - rid: 421335540934639769
+      type: {class: StringScriptableVariableValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _variable: {fileID: 11400000, guid: 53ce01ad5cee2144d8c9db78b99ee8bd, type: 2}
+    - rid: 421335540934639770
+      type: {class: WaitInputCondition, ns: D_Dev.InputSystem.Extensions.Conditions, asm: D-Dev.InputSystem.Extensions}
+      data:
+        _inputAction: {fileID: 2169888456485677360, guid: 5874c51c9acab224ab9f2bff4257f317, type: 3}
+        _desiredPhase: 0
+    - rid: 421335540934639771
+      type: {class: Vector3ValueExists, ns: D_Dev.PolymorphicValueSystem.Extensions, asm: D-Dev.PolymorphicValueSystem.Extensions}
+      data:
+        _value:
+          rid: 421335540934639773
+        _isExists: 1
+    - rid: 421335540934639772
+      type: {class: CompareBoolValues, ns: D_Dev.PolymorphicValueSystem.Extensions, asm: D-Dev.PolymorphicValueSystem.Extensions}
+      data:
+        _invert: 0
+        _value:
+          rid: 421335540934639774
+        _compareTo:
+          rid: 421335540934639775
+    - rid: 421335540934639773
+      type: {class: Vector3ScriptableVariableValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _variable: {fileID: 11400000, guid: a605362cb7f572241b5fde9c41933e89, type: 2}
+    - rid: 421335540934639774
+      type: {class: BoolRuntimeVariableValue, ns: D_Dev.RuntimeEntityVariables.Extensions, asm: D-Dev.RuntimeEntityVariablesContainer.Extensions}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _variableID: {fileID: 11400000, guid: 8a358dfe0c06a16478726d503e074ade, type: 2}
+        _runtimeEntityVariablesContainer: {fileID: 6822480062918626474}
+    - rid: 421335540934639775
+      type: {class: BoolConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _value: 1
+    - rid: 421335540934639776
+      type: {class: WaitInputCondition, ns: D_Dev.InputSystem.Extensions.Conditions, asm: D-Dev.InputSystem.Extensions}
+      data:
+        _inputAction: {fileID: -3552318245088629112, guid: 5874c51c9acab224ab9f2bff4257f317, type: 3}
+        _desiredPhase: 1
 --- !u!1 &3453761683626983109
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,6 +565,7 @@ Transform:
   m_Children:
   - {fileID: 1126060182291296669}
   - {fileID: 2648559976706369361}
+  - {fileID: 912006545315922122}
   - {fileID: 1364780149955261123}
   - {fileID: 7120370319048482098}
   m_Father: {fileID: 5793557432316069699}
@@ -550,6 +617,7 @@ MonoBehaviour:
   - {fileID: 242132328051331751}
   - {fileID: 2718381449706488029}
   - {fileID: 7120370319048482097}
+  - {fileID: 5709997758400204901}
   references:
     version: 2
     RefIds:
@@ -683,6 +751,12 @@ MonoBehaviour:
     - rid: 421335455894078046
     _fixedConditions: []
   - _fromStates:
+    - rid: 421335540934639777
+    _conditions:
+    - rid: 421335540934639778
+    - rid: 421335540934639779
+    _fixedConditions: []
+  - _fromStates:
     - rid: 421335455894077914
     _conditions:
     - rid: 421335455894078102
@@ -697,6 +771,7 @@ MonoBehaviour:
     rid: 421335528850325831
   _accelerationSpeed:
     rid: 421335528850325832
+  _preserveMomentum: 0
   _rotateRoot:
     rid: 421335528850325833
   _rotateSpeed:
@@ -853,6 +928,44 @@ MonoBehaviour:
           m_PersistentCalls:
             m_Calls: []
         _value: 0
+    - rid: 421335540934639777
+      type: {class: StringScriptableVariableValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _variable: {fileID: 11400000, guid: 53ce01ad5cee2144d8c9db78b99ee8bd, type: 2}
+    - rid: 421335540934639778
+      type: {class: WaitInputCondition, ns: D_Dev.InputSystem.Extensions.Conditions, asm: D-Dev.InputSystem.Extensions}
+      data:
+        _inputAction: {fileID: -3552318245088629112, guid: 5874c51c9acab224ab9f2bff4257f317, type: 3}
+        _desiredPhase: 1
+    - rid: 421335540934639779
+      type: {class: CompareBoolValues, ns: D_Dev.PolymorphicValueSystem.Extensions, asm: D-Dev.PolymorphicValueSystem.Extensions}
+      data:
+        _invert: 0
+        _value:
+          rid: 421335540934639780
+        _compareTo:
+          rid: 421335540934639781
+    - rid: 421335540934639780
+      type: {class: BoolRuntimeVariableValue, ns: D_Dev.RuntimeEntityVariables.Extensions, asm: D-Dev.RuntimeEntityVariablesContainer.Extensions}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _variableID: {fileID: 11400000, guid: 8a358dfe0c06a16478726d503e074ade, type: 2}
+        _runtimeEntityVariablesContainer: {fileID: 6822480062918626474}
+    - rid: 421335540934639781
+      type: {class: BoolConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _value: 1
 --- !u!1 &3855821274509562278
 GameObject:
   m_ObjectHideFlags: 0
@@ -1149,6 +1262,262 @@ Transform:
   - {fileID: 2012223515722146468}
   m_Father: {fileID: 5601785312722546126}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5246189124551044689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 912006545315922122}
+  - component: {fileID: 5709997758400204901}
+  m_Layer: 0
+  m_Name: Sprint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &912006545315922122
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5246189124551044689}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2359317233137536501}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5709997758400204901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5246189124551044689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5e7a1c93f0d4e2a8c6b1d4f7e9a0c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateName:
+    rid: 421335455894077668
+  _canBeTransitioned:
+    rid: 421335455894077659
+  _stateExitTime:
+    rid: 421335455894077660
+  _transitions:
+  - _fromStates:
+    - rid: 421335455894077692
+    _conditions:
+    - rid: 421335455894077693
+    - rid: 421335455894077694
+    - rid: 421335455894078050
+    _fixedConditions: []
+  - _fromStates:
+    - rid: 421335455894077916
+    _conditions:
+    - rid: 421335540934639762
+    - rid: 421335540934639768
+    - rid: 421335540934639763
+    - rid: 421335540934639764
+    _fixedConditions: []
+  _movementController: {fileID: 3528303558420199929}
+  _canMove: 1
+  _canRotate: 1
+  _movementDirection:
+    rid: 421335455894077677
+  _maxMoveSpeed:
+    rid: 421335455894077662
+  _accelerationSpeed:
+    rid: 421335455894077663
+  _preserveMomentum: 0
+  _rotateRoot:
+    rid: 421335455894077665
+  _rotateSpeed:
+    rid: 421335455894077666
+  references:
+    version: 2
+    RefIds:
+    - rid: 421335455894077659
+      type: {class: BoolConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _value: 1
+    - rid: 421335455894077660
+      type: {class: FloatConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _value: 0
+    - rid: 421335455894077662
+      type: {class: FloatConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _value: 3
+    - rid: 421335455894077663
+      type: {class: FloatConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _value: 100
+    - rid: 421335455894077665
+      type: {class: TransformConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _value: {fileID: 5793557432316069699}
+    - rid: 421335455894077666
+      type: {class: FloatConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _value: 10
+    - rid: 421335455894077668
+      type: {class: StringScriptableVariableValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _variable: {fileID: 11400000, guid: 53ce01ad5cee2144d8c9db78b99ee8bd, type: 2}
+    - rid: 421335455894077677
+      type: {class: Vector3ScriptableVariableValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _variable: {fileID: 11400000, guid: a605362cb7f572241b5fde9c41933e89, type: 2}
+    - rid: 421335455894077692
+      type: {class: StringScriptableVariableValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _variable: {fileID: 11400000, guid: 2eab22e876e30964db86d14e0c3acbb8, type: 2}
+    - rid: 421335455894077693
+      type: {class: WaitInputCondition, ns: D_Dev.InputSystem.Extensions.Conditions, asm: D-Dev.InputSystem.Extensions}
+      data:
+        _inputAction: {fileID: 2169888456485677360, guid: 5874c51c9acab224ab9f2bff4257f317, type: 3}
+        _desiredPhase: 0
+    - rid: 421335455894077694
+      type: {class: Vector3ValueExists, ns: D_Dev.PolymorphicValueSystem.Extensions, asm: D-Dev.PolymorphicValueSystem.Extensions}
+      data:
+        _value:
+          rid: 421335455894077695
+        _isExists: 1
+    - rid: 421335455894077695
+      type: {class: Vector3ScriptableVariableValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _variable: {fileID: 11400000, guid: a605362cb7f572241b5fde9c41933e89, type: 2}
+    - rid: 421335455894077916
+      type: {class: StringScriptableVariableValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _variable: {fileID: 11400000, guid: 61775639c32fd9143bf6370dda59af33, type: 2}
+    - rid: 421335455894078050
+      type: {class: CompareBoolValues, ns: D_Dev.PolymorphicValueSystem.Extensions, asm: D-Dev.PolymorphicValueSystem.Extensions}
+      data:
+        _invert: 0
+        _value:
+          rid: 421335455894078051
+        _compareTo:
+          rid: 421335455894078052
+    - rid: 421335455894078051
+      type: {class: BoolRuntimeVariableValue, ns: D_Dev.RuntimeEntityVariables.Extensions, asm: D-Dev.RuntimeEntityVariablesContainer.Extensions}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _variableID: {fileID: 11400000, guid: 8a358dfe0c06a16478726d503e074ade, type: 2}
+        _runtimeEntityVariablesContainer: {fileID: 6822480062918626474}
+    - rid: 421335455894078052
+      type: {class: BoolConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _value: 1
+    - rid: 421335540934639762
+      type: {class: WaitInputCondition, ns: D_Dev.InputSystem.Extensions.Conditions, asm: D-Dev.InputSystem.Extensions}
+      data:
+        _inputAction: {fileID: 2169888456485677360, guid: 5874c51c9acab224ab9f2bff4257f317, type: 3}
+        _desiredPhase: 0
+    - rid: 421335540934639763
+      type: {class: Vector3ValueExists, ns: D_Dev.PolymorphicValueSystem.Extensions, asm: D-Dev.PolymorphicValueSystem.Extensions}
+      data:
+        _value:
+          rid: 421335540934639765
+        _isExists: 1
+    - rid: 421335540934639764
+      type: {class: CompareBoolValues, ns: D_Dev.PolymorphicValueSystem.Extensions, asm: D-Dev.PolymorphicValueSystem.Extensions}
+      data:
+        _invert: 0
+        _value:
+          rid: 421335540934639766
+        _compareTo:
+          rid: 421335540934639767
+    - rid: 421335540934639765
+      type: {class: Vector3ScriptableVariableValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _variable: {fileID: 11400000, guid: a605362cb7f572241b5fde9c41933e89, type: 2}
+    - rid: 421335540934639766
+      type: {class: BoolRuntimeVariableValue, ns: D_Dev.RuntimeEntityVariables.Extensions, asm: D-Dev.RuntimeEntityVariablesContainer.Extensions}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _variableID: {fileID: 11400000, guid: 8a358dfe0c06a16478726d503e074ade, type: 2}
+        _runtimeEntityVariablesContainer: {fileID: 6822480062918626474}
+    - rid: 421335540934639767
+      type: {class: BoolConstantValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _value: 1
+    - rid: 421335540934639768
+      type: {class: WaitInputCondition, ns: D_Dev.InputSystem.Extensions.Conditions, asm: D-Dev.InputSystem.Extensions}
+      data:
+        _inputAction: {fileID: -3552318245088629112, guid: 5874c51c9acab224ab9f2bff4257f317, type: 3}
+        _desiredPhase: 0
 --- !u!1 &5383563059671793639
 GameObject:
   m_ObjectHideFlags: 0
@@ -1291,7 +1660,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5793557432316069698}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 2fdfa08cd28cf324cbf7e396e9559bd3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1411,9 +1780,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5793557433651296433}
+  - component: {fileID: 5793557433651296434}
   - component: {fileID: 5793557433651296439}
   - component: {fileID: 5793557433651296438}
-  - component: {fileID: 5793557433651296434}
   - component: {fileID: 751078683816994302}
   - component: {fileID: 7734242054103563243}
   m_Layer: 0
@@ -1432,12 +1801,35 @@ Transform:
   m_GameObject: {fileID: 5793557433651296437}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.981, z: 0}
+  m_LocalPosition: {x: 0, y: -1.125, z: 0}
   m_LocalScale: {x: 0.60225, y: 0.32012597, z: 0.60225}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5793557432316069699}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &5793557433651296434
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5793557433651296437}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5793557433651296439
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1537,29 +1929,6 @@ MonoBehaviour:
   _onExit2D:
     m_PersistentCalls:
       m_Calls: []
---- !u!136 &5793557433651296434
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5793557433651296437}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.8
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &751078683816994302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1749,16 +2118,28 @@ MonoBehaviour:
       _crossFadeTime: 0.25
       _animationSpeed: 1
   - StateName:
-      rid: 421335483193229312
+      rid: 421335540934639782
     AnimationConfig:
-      _animationState: Floppa_JumpStart
+      _animationState: Floppa_Run2
       _isRandomizeClip: 0
       _isAnimationClipOverride: 0
       _overrideAnimationClip: {fileID: 0}
-      _animationClip: {fileID: 7400000, guid: f5bbc0dfcd4a5cc4db6fb68bbeb0c013, type: 2}
+      _animationClip: {fileID: 7400000, guid: 11e9fb4349fad8742a2a407763022eb7, type: 2}
       _animationClips: []
       _layer: 0
       _crossFadeTime: 0.25
+      _animationSpeed: 1
+  - StateName:
+      rid: 421335483193229312
+    AnimationConfig:
+      _animationState: Floppa_JumpStart1
+      _isRandomizeClip: 0
+      _isAnimationClipOverride: 0
+      _overrideAnimationClip: {fileID: 0}
+      _animationClip: {fileID: 7400000, guid: 817b6135fe07de74e86fe3526004a0c1, type: 2}
+      _animationClips: []
+      _layer: 0
+      _crossFadeTime: 0.1
       _animationSpeed: 1
   - StateName:
       rid: 421335528850325835
@@ -1770,7 +2151,7 @@ MonoBehaviour:
       _animationClip: {fileID: 7400000, guid: bacf09725629704428b80763c5898a4c, type: 2}
       _animationClips: []
       _layer: 0
-      _crossFadeTime: 0.1
+      _crossFadeTime: 0.25
       _animationSpeed: 1
   references:
     version: 2
@@ -1807,6 +2188,14 @@ MonoBehaviour:
           m_PersistentCalls:
             m_Calls: []
         _variable: {fileID: 11400000, guid: 7bcaf7cc11148f647b8705b8b68b9488, type: 2}
+    - rid: 421335540934639782
+      type: {class: StringScriptableVariableValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _variable: {fileID: 11400000, guid: 53ce01ad5cee2144d8c9db78b99ee8bd, type: 2}
 --- !u!1 &6502090825664350796
 GameObject:
   m_ObjectHideFlags: 0
@@ -1958,6 +2347,7 @@ MonoBehaviour:
   - _fromStates:
     - rid: 421335455894077834
     - rid: 421335455894077835
+    - rid: 421335540934639859
     _conditions:
     - rid: 421335455894077836
     - rid: 421335455894077991
@@ -1971,6 +2361,7 @@ MonoBehaviour:
     rid: 421335455894078093
   _accelerationSpeed:
     rid: 421335455894078094
+  _preserveMomentum: 1
   _rotateRoot:
     rid: 421335455894078095
   _rotateSpeed:
@@ -2014,7 +2405,7 @@ MonoBehaviour:
         OnValueChanged:
           m_PersistentCalls:
             m_Calls: []
-        _value: 10
+        _value: 8
     - rid: 421335455894077830
       type: {class: StringScriptableVariableValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
       data:
@@ -2109,6 +2500,14 @@ MonoBehaviour:
           m_PersistentCalls:
             m_Calls: []
         _variable: {fileID: 11400000, guid: a605362cb7f572241b5fde9c41933e89, type: 2}
+    - rid: 421335540934639859
+      type: {class: StringScriptableVariableValue, ns: D_Dev.PolymorphicValueSystem, asm: D-Dev.PolymorphicValueSystem}
+      data:
+        _showEvent: 0
+        OnValueChanged:
+          m_PersistentCalls:
+            m_Calls: []
+        _variable: {fileID: 11400000, guid: 53ce01ad5cee2144d8c9db78b99ee8bd, type: 2}
 --- !u!1 &7120370319048482099
 GameObject:
   m_ObjectHideFlags: 0
@@ -2180,6 +2579,7 @@ MonoBehaviour:
     rid: 421335455894079509
   _accelerationSpeed:
     rid: 421335455894079510
+  _preserveMomentum: 1
   _rotateRoot:
     rid: 421335455894079511
   _rotateSpeed:

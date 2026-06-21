@@ -11,22 +11,38 @@ namespace _Project.Scripts.Core.States
     {
         #region Fields
 
+        [PropertyOrder(99)]
         [SerializeField] protected BaseMovementController _movementController;
 
         [Space]
+        [PropertyOrder(99)]
         [SerializeField] protected bool _canMove;
+        [PropertyOrder(99)]
         [SerializeField] protected bool _canRotate;
 
+        [PropertyOrder(99)]
         [ShowIf("@_canMove || _canRotate")]
         [SerializeReference] protected PolymorphicValue<Vector3> _movementDirection = new Vector3ConstantValue();
 
+        [PropertyOrder(99)]
+        [FoldoutGroup("Movement Settings")]
         [ShowIf(nameof(_canMove))]
         [SerializeReference] protected PolymorphicValue<float> _maxMoveSpeed = new FloatConstantValue();
+        [PropertyOrder(99)]
+        [FoldoutGroup("Movement Settings")]
         [ShowIf(nameof(_canMove))]
         [SerializeReference] protected PolymorphicValue<float> _accelerationSpeed = new FloatConstantValue();
+        [PropertyOrder(99)]
+        [FoldoutGroup("Movement Settings")]
+        [ShowIf(nameof(_canMove))]
+        [SerializeField] protected bool _preserveMomentum;
 
+        [PropertyOrder(99)]
+        [FoldoutGroup("Rotation Settings")]
         [ShowIf(nameof(_canRotate))]
         [SerializeReference] protected PolymorphicValue<Transform> _rotateRoot = new TransformConstantValue();
+        [PropertyOrder(99)]
+        [FoldoutGroup("Rotation Settings")]
         [ShowIf(nameof(_canRotate))]
         [SerializeReference] protected PolymorphicValue<float> _rotateSpeed = new FloatConstantValue();
 
@@ -41,7 +57,12 @@ namespace _Project.Scripts.Core.States
             if (_canMove)
             {
                 _movementController.ResumeMovement();
-                _movementController.SetMaxVelocity(_maxMoveSpeed.Value);
+
+                float maxSpeed = _maxMoveSpeed.Value;
+                if (_preserveMomentum)
+                    maxSpeed = Mathf.Max(maxSpeed, _movementController.GetVelocity());
+
+                _movementController.SetMaxVelocity(maxSpeed);
                 _movementController.SetAcceleration(_accelerationSpeed.Value);
             }
             else
